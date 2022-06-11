@@ -127,14 +127,17 @@ nav li {
     /* height: 42vh; */
     border: 1px solid rgb(245, 245, 245);
 }
-.item-card, .item-card-body, .item-card-footer{
+
+.item-card, .item-card-body, .item-card-footer {
     background-color: white;
 }
-.item-card-body, .item-card-footer{
+
+.item-card-body, .item-card-footer {
     border: none;
 }
-.item-card-body{
-    height: 42vh;
+
+.item-card-body {
+    height: 33vh;
 }
 
 .item-price {
@@ -200,4 +203,99 @@ nav li {
 
 .minus {
     float: right;
+}
+
+.cart-left-card, .cart-right-card {
+    border: none;
+}
+
+.trash {
+    float: right;
+    padding: 10px;
+}
+
+.trash:hover {
+    background-color: var(--secondaryColor);
+    color: white;   
+    border-radius: 50px;
+    transition: 500ms;
+    cursor: pointer;
+}
+
+.container1 {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    /* font-size: 22px; */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container1 input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    /* background-color: ; */
+    border: 1px solid var(--secondaryColor);
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.container1:hover input~.checkmark {
+    background-color: var(--secondaryColor);
+}
+
+/* When the radio button is checked, add a blue background */
+.container1 input:checked~.checkmark {
+    background-color: var(--secondaryColor);
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container1 input:checked~.checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container1 .checkmark:after {
+    top: 5px;
+    left: 5px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+.check{
+    background-color: rgb(243, 112, 33);
+    color: white;
+    border: none;
+    height: 40px;
+    margin-top: 20px;
+    border-radius: 5px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.05);
+    font-size: 15px;
+    font-weight: bold;
+}
+.check:hover{
+    background-color: rgb(212, 106, 40);
+
 }

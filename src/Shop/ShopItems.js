@@ -59,11 +59,17 @@ export default function ShopItems({
                             item.item_image
                           }
                           alt=""
-                          style={{ height: 150, width:120 }}
+                          style={{ height: 150, width: 120 }}
                         />
                       </div>
-
-                      <p className="item-name">{item.item_name}</p>
+                      {/* {item.body.length > 250
+                        ? `${item.body.substring(0, 250)}...`
+                        : item.body} */}
+                      <p className="item-name">
+                        {item.item_name.length > 16
+                          ? `${item.item_name.substring(0, 16)}...`
+                          : item.item_name}
+                      </p>
                       <p className="item-price">₦{item.unit_price}</p>
                     </CardBody>
                     <CardFooter className="item-card-footer">

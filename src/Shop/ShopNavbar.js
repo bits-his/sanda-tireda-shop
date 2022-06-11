@@ -16,7 +16,7 @@ import {
   Row,
 } from "reactstrap";
 import logo from "../Images/logo.png";
-
+import { useNavigate } from "react-router";
 export default function ShopNavbar({ cart = [] }) {
   const [open, setOpen] = useState(false);
   const toggle = () => {
@@ -26,11 +26,12 @@ export default function ShopNavbar({ cart = [] }) {
   const toggle1 = () => {
     setOpen1(!open1);
   };
+  const navigate = useNavigate();
   return (
     <div>
       <Row className="nav-row">
         <Col md={2} className="col1">
-          <img src={logo} style={{ width: 50, marginTop: 12 }} />
+          <img src={logo} style={{ width: 50, marginTop: 12, cursor:'pointer' }} onClick={()=>navigate('/')}/>
         </Col>
         <Col md={6} className="col2 text-center">
           <div className="search">
@@ -100,7 +101,7 @@ export default function ShopNavbar({ cart = [] }) {
                   </DropdownMenu>
                 </Dropdown>
               </li>
-              <li className="btn">
+              <li className="btn" onClick={()=>navigate('/cart')}>
                 {/* <div className="cart-div"> */}
                 <ShoppingCart size="1.5em" /> Cart
                 <span className="cart-count">{cart.length}</span>
