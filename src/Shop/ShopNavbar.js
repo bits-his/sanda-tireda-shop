@@ -31,15 +31,19 @@ export default function ShopNavbar({ cart = [] }) {
     <div>
       <Row className="nav-row">
         <Col md={2} className="col1">
-          <img src={logo} style={{ width: 50, marginTop: 12, cursor:'pointer' }} onClick={()=>navigate('/')}/>
+          <img
+            src={logo}
+            style={{ width: 50, marginTop: 12, cursor: "pointer" }}
+            onClick={() => navigate("/")}
+          />
         </Col>
         <Col md={6} className="col2 text-center">
           <div className="search">
-            <input placeholder="Search products, brands and categories" />
+            <input placeholder="Search item here" />
             <span>
               <Search className="icon" />
             </span>
-            <button>SEARCH</button>
+            <button>Search</button>
           </div>
         </Col>
         <Col md={4} className="col3">
@@ -60,7 +64,10 @@ export default function ShopNavbar({ cart = [] }) {
                   <DropdownMenu className="drop-down-menu">
                     {/* <DropdownItem header>Settings & Privacy</DropdownItem> */}
                     {/* <DropdownItem disabled>Action</DropdownItem> */}
-                    <DropdownItem className="drop-down-item">
+                    <DropdownItem
+                      className="drop-down-item"
+                      onClick={() => navigate("/account")}
+                    >
                       Account
                     </DropdownItem>
                     <DropdownItem className="drop-down-item">
@@ -101,7 +108,7 @@ export default function ShopNavbar({ cart = [] }) {
                   </DropdownMenu>
                 </Dropdown>
               </li>
-              <li className="btn" onClick={()=>navigate('/cart')}>
+              <li className="btn" onClick={() => navigate("/cart")}>
                 {/* <div className="cart-div"> */}
                 <ShoppingCart size="1.5em" /> Cart
                 <span className="cart-count">{cart.length}</span>

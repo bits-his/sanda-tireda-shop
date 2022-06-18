@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Rewind } from "react-feather";
 import {
   Card,
   CardBody,
   CardFooter,
-  CardHeader,
   Col,
   Container,
   Row,
 } from "reactstrap";
-import bag from "../Images/bag.png";
-import shoebag from "../Images/shoebag.png";
-import shoe from "../Images/shoe.png";
 export default function ShopItems({
   cart = [],
   addToCart = (f) => f,
@@ -42,7 +37,7 @@ export default function ShopItems({
   return (
     <div style={{ paddingTop: 70, paddingBottom: 20 }}>
       <Container>
-        <Card className="mt-3 shop-main-card">
+        <Card className="mt-3 shop-main-card shadow">
           <p className="shop-card-title text-center">Select item to buy</p>
           <Row>
             {/* {JSON.stringify(itemList)} */}

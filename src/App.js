@@ -7,7 +7,7 @@ import AppNavigation from "./Route/AppNavigation";
 
 function App() {
   return (
-    <div className="whole">
+    <div className="">
       <AppNavigation />
     </div>
   );

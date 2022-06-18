@@ -31,9 +31,7 @@ nav li {
     /* position: sticky; */
 }
 
-.whole {
-    background-color: rgb(255, 205, 41);
-}
+
 
 .col1 {
     /* margin-left: 50px; */
@@ -216,7 +214,7 @@ nav li {
 
 .trash:hover {
     background-color: var(--secondaryColor);
-    color: white;   
+    color: white;
     border-radius: 50px;
     transition: 500ms;
     cursor: pointer;
@@ -284,7 +282,8 @@ nav li {
     border-radius: 50%;
     background: white;
 }
-.check{
+
+.check {
     background-color: rgb(243, 112, 33);
     color: white;
     border: none;
@@ -295,7 +294,8 @@ nav li {
     font-size: 15px;
     font-weight: bold;
 }
-.check:hover{
+
+.check:hover {
     background-color: rgb(212, 106, 40);
 
 }

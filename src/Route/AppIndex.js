@@ -1,6 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { Col, Row } from "reactstrap";
+import AccountSidebar from "../Shop/Dashboard/AccountSidebar";
 import ShopItems from "../Shop/ShopItems";
 import ShopNavbar from "../Shop/ShopNavbar";
 export default function AppIndex() {
@@ -10,6 +11,7 @@ export default function AppIndex() {
         <Col md={12} className="m-0 p-0">
           <ShopNavbar />
           {/* <ShopItems /> */}
+          {/* <AccountSidebar /> */}
         </Col>
       </Row>
       <Row className="m-0 p-0">

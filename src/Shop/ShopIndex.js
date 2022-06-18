@@ -41,7 +41,7 @@ export default function ShopIndex() {
   };
 
   return (
-    <div className="whole">
+    <div className="">
       <ShopNavbar cart={cart} />
       <ShopItems
         cart={cart}
