@@ -12,7 +12,7 @@ export default function ShopCart() {
       <div
         className="container"
         div
-        style={{ paddingTop: 70, paddingBottom: 20 }}
+        style={{ marginTop: 80, paddingBottom: 20 }}
       >
         <Row className="mt-3">
           <Col md={8}>

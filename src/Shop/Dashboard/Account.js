@@ -9,7 +9,7 @@ export default function Account() {
     <div
       className="container"
       div
-      style={{ marginTop: 100, paddingBottom: 20 }}
+      style={{ marginTop: 80, paddingBottom: 20 }}
     >
       <Row>
         <Col md={3}>
