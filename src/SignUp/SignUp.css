@@ -1,0 +1,79 @@
+*{
+    background-color: #fff;
+}
+.singIn{
+    background-color: #fff;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+    margin: auto;
+    margin-top: 5%;
+}
+.SingUp-first-header{
+    color: rgb(243, 112, 33);
+    margin-top: 100px;
+    margin-bottom: 50px;
+}
+.SingUp-first-input{
+    border: none;
+    border-bottom: 1px solid gray;
+    font-size: 18px;
+    margin: 10px;
+    padding: 5px;
+    padding-left: 10px;
+    font-family: Calibri;
+}
+.btn-for-signUp,.btn-for-signUp2{
+    margin: 10px;
+    border: none;
+    background-color: #f37021;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 8px;
+    border-radius: 6px;
+    font-family:  Calibri;
+}
+.btn-for-signUp2{
+    background-color: #a41b15;
+}
+.btn-for-signUp:hover,.btn-for-signUp2:hover,.btn-for-signUp3:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.labe-for-sign:hover,.labe-for-sign2:hover{
+    cursor: pointer;
+}
+.labe-for-sign2:hover{
+    border: 2px solid #a41b15;
+}
+.href{
+    color: #f37021;
+    text-decoration: none;
+    margin-top: 10px;
+    margin-right: 15px;
+}
+.href1{
+    color: #f37021;
+    text-decoration: none;
+}
+.href:hover,.href1:hover{
+    color: #a41b15;
+    text-decoration: underline ;
+    text-shadow: 2px 2px 4px #a41b15;
+}
+.btn-for-signUp3{
+    margin: 10px;
+    border: none;
+    background-color: #344f88;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 8px;
+    border-radius: 6px;
+    font-family:  Calibri;
+    justify-content: space-between;
+}

@@ -60,7 +60,7 @@ export default function ShopNavbar({ cart = [] }) {
                   <DropdownMenu className="drop-down-menu">
                     {/* <DropdownItem header>Settings & Privacy</DropdownItem> */}
                     {/* <DropdownItem disabled>Action</DropdownItem> */}
-                    <DropdownItem className="drop-down-item">
+                    <DropdownItem className="drop-down-item" onClick={()=>navigate('/logIn')} >
                       Account
                     </DropdownItem>
                     <DropdownItem className="drop-down-item">

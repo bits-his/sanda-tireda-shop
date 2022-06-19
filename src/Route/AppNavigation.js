@@ -1,6 +1,8 @@
 import { useRoutes } from "react-router-dom";
 import ShopCart from "../Shop/ShopCart";
 import ShopItems from "../Shop/ShopItems";
+import Login from "../SignUp/LogIn";
+import SignUp from "../SignUp/SignUp";
 import AppIndex from "./AppIndex";
 
 function AppNavigation() {
@@ -14,6 +16,14 @@ function AppNavigation() {
           path: "/cart",
           element: <ShopCart />,
         },
+        {
+          path: "/logIn",
+          element: <Login />
+        },
+        {
+          path: "/sign-up",
+          element: <SignUp />
+        }
       ],
     },
   ]);
