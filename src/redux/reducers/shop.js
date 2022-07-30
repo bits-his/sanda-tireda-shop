@@ -1,8 +1,12 @@
-import { CARTS_LIST, CART_ITEM, ADD_CART, UPDATE_CART, DELETE_CART } from "../action/type";
+import { CARTS_LIST, CART_ITEM, ADD_CART, UPDATE_CART, 
+    DELETE_CART,
+    ORDER_ERROR
+ } from "../action/type";
 
 const initialState = {
     carts: [],
-    cart: {}
+    cart: {},
+    error:{}
 };
 
 export default (state = initialState, action) => {
@@ -34,6 +38,11 @@ export default (state = initialState, action) => {
                 ...state,
                 carts: [...state.carts.filter((ct)=>ct.item_code!==action.payload.item_code) ]
             };
+        case ORDER_ERROR:
+            return {
+                ...state,
+                error:action.payload
+            }
         default: return state
     }
 }

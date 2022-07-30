@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Badge, Card, Col, Row } from "reactstrap";
+import { Badge, Button, Card, Col, Row } from "reactstrap";
 import { items } from "./Items";
 import { Delete, Trash, CheckCircle } from "react-feather";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,7 +35,7 @@ export default function CartCard() {
     <div>
       <Row>
         <Col md={12}>
-          {carts.length && carts.map((item, index) => (
+          {carts.length ? carts.map((item, index) => (
             <Card className="shadow cart-left-card mt-4 px-3 py-3" onMouseHover={()=>selectCart(item)}>
               <Row>
                 <Col md={1}>
@@ -87,7 +87,7 @@ export default function CartCard() {
                     <Col md={3}>
                       <div className="" style={{ float: "right" }}>
                        
-                        <button
+                        <Button
                           className=""
                           style={{
                             border: "none",
@@ -97,9 +97,9 @@ export default function CartCard() {
                           }}
                         >
                           -
-                        </button>
+                        </Button>
                         <p className="item-quantity">{item.item_quantity}</p>
-                        <button
+                        <Button
                           className=""
                           style={{
                             border: "none",
@@ -110,14 +110,14 @@ export default function CartCard() {
                           onClick={()=>addOneItem(item)}
                         >
                           +
-                        </button>
+                        </Button>
                       </div>
                     </Col>
                   </Row>
                 </Col>
               </Row>
             </Card>
-          ))}
+          )):<></>}
         </Col>
       </Row>
     </div>

@@ -21,6 +21,8 @@ export const CART_ITEM = 'SHOP-CART_ITEM'
 export const ADD_CART = 'SHOP-ADD_CART'
 export const UPDATE_CART = 'SHOP-UPDATE-CART'
 export const DELETE_CART = 'SHOP-DELETE_CART'
+export const ORDER_ERROR = 'SHOP-ORDER_ERROR'
+export const ORDER_RESP = 'SHOP-ORDER_RESP'
 
 
 

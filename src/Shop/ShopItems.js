@@ -101,7 +101,7 @@ export default function ShopItems() {
                           <p className="item-quantity">
                             {selected.selected_quantity}
                           </p>
-                          <Badge color="success">{item.qty}</Badge>
+                          <Badge>{carts.filter(ct=>ct.item_code===item.item_code)[0].qty}</Badge>
                           <Button
                             className="minus"
                             onClick={() => deleteCart(item)}

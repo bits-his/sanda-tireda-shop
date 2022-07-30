@@ -14,7 +14,7 @@ export const apiURL =
 let token = localStorage.getItem("@@bits_lis");
 token = JSON.parse(token);
 
-export const _postApi = (url, data = [], success = (f) => f, error = (f) => f) => {
+export const _postApi = (url, data = {}, success = (f) => f, error = (f) => f) => {
   fetch(apiURL + url, {
     method: "POST",
     headers: { "Content-Type": "application/json", authorization: token },

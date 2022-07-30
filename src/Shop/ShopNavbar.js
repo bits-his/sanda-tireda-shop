@@ -7,20 +7,23 @@ import {
   User,
 } from "react-feather";
 import {
+  Button,
   CardText,
   Col,
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
+  NavItem,
   Row,
 } from "reactstrap";
 import logo from "../Images/logo.png";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 export default function ShopNavbar() {
 
-  const {carts}  = useSelector((s)=>s.shop)
+  const {shop:{carts}, auth:{user, authenticated}}  = useSelector((s)=>s)
 
   const [open, setOpen] = useState(false);
   const toggle = () => {
@@ -53,8 +56,8 @@ export default function ShopNavbar() {
         <Col md={4} className="col3">
           <nav>
             <ul>
-              <li>
-                <Dropdown className="d" isOpen={open} toggle={toggle}>
+              <li>{authenticated?
+                (<Dropdown className="d" isOpen={open} toggle={toggle}>
                   <DropdownToggle
                     className="btn"
                     style={{
@@ -68,10 +71,7 @@ export default function ShopNavbar() {
                   <DropdownMenu className="drop-down-menu">
                     {/* <DropdownItem header>Settings & Privacy</DropdownItem> */}
                     {/* <DropdownItem disabled>Action</DropdownItem> */}
-                    <DropdownItem
-                      className="drop-down-item"
-                      onClick={() => navigate("/account")}
-                    >
+                    <DropdownItem className="drop-down-item" onClick={()=>navigate('/account')} >
                       Account
                     </DropdownItem>
                     <DropdownItem className="drop-down-item">
@@ -82,7 +82,9 @@ export default function ShopNavbar() {
                       Sign Out
                     </DropdownItem>
                   </DropdownMenu>
-                </Dropdown>
+                </Dropdown>):(<NavItem>
+                  <Button className="btn-default">Login</Button>
+              </NavItem>)}
               </li>
               <li>
                 <Dropdown className="d" isOpen={open1} toggle={toggle1}>
@@ -107,7 +109,7 @@ export default function ShopNavbar() {
                     </DropdownItem>
                     <DropdownItem className="drop-down-item" divider />
                     <DropdownItem className="drop-down-item">
-                      Sign Out
+                      About us
                     </DropdownItem>
                   </DropdownMenu>
                 </Dropdown>

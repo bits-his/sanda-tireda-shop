@@ -5,6 +5,8 @@ import Orders from "../Shop/Dashboard/Orders";
 import Overview from "../Shop/Dashboard/Overview";
 import ShopCart from "../Shop/ShopCart";
 import ShopItems from "../Shop/ShopItems";
+import Login from "../SignUp/LogIn";
+import SignUp from "../SignUp/SignUp";
 import AppIndex from "./AppIndex";
 
 function AppNavigation() {
@@ -19,22 +21,23 @@ function AppNavigation() {
           element: <ShopCart />,
         },
         {
-          path: "/account",
-          element: <Account />,
-          children: [
-            { index: true, element: <AccountHome /> },
-            {
-              path: "overview",
-              element: <Overview />,
-            },
-            {
-              path: "orders",
-              element: <Orders />,
-            },
-          ],
+          path: "/logIn",
+          element: <Login />
         },
+        {
+          path: "/sign-up",
+          element: <SignUp />
+        }
       ],
     },
+    {
+
+      path: "/account",
+      element: <Account />,
+      children: [
+        { index: true, element: <AccountHome /> },
+      ]
+    }
   ]);
   return element;
 }
