@@ -1,0 +1,146 @@
+*{
+    /* background-color: #fff; */
+}
+.singIn{
+    /* width: 550px; */
+    margin: auto;
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+}
+.Login-first-header{
+    text-align: center;
+    color: #f37021;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+.Login-first-input{
+    margin: 10px;
+    padding: 5px;
+    border: none;
+    border-bottom: 2px solid #f37021;
+    outline: none;
+}
+a.href{
+    margin-right: 10px;
+    text-decoration: none;
+    color: #f37021;
+    margin-top: 8px;
+}
+a.href:hover{
+    color: #a41b15;
+    text-decoration: underline;
+}
+label{
+    cursor: pointer;
+}
+.nessted{
+    background-color: transparent;
+    border: none;
+    margin-top: -5px;
+    padding: 0%;
+    color: #f37021;
+    text-decoration: underline;
+}
+.nessted:hover{
+    color: #a41b15;
+}
+.btn-for-login,.btn-for-login2,.btn-for-login3{
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-weight: 600;
+    font-family: Segoe UI ;
+    color: #fff;
+    padding: 5px;
+    border: none;
+    border-radius: 10px;
+    text-transform: uppercase;
+}
+.btn-for-login{
+    background-color: #f37021;
+}
+.btn-for-login2{
+    background-color: #344f88;
+}
+.btn-for-login3{
+    background-color: #a41b15;
+}
+.singIn2{
+    /* width: 650px; */
+    margin: auto;
+    margin-top: 10%;
+}
+.input-div{
+    display: flex;
+    flex-direction: row;
+    margin: 15px;
+}
+.SingUp-first-header{
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 70px;
+    color: #a41b15;
+}
+.SingUp-first-input{
+    margin-right: 10px;
+    padding: 5px;
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #a41b15 ;
+    outline: none;
+}
+.span{
+    margin-left: 15px;
+    color: #a41b15;
+    font-weight: 500;
+}
+.SingUp-first-input-number{
+    margin-left: 10px;
+    border: none;
+    padding: 5px;
+    border-bottom: 2px solid #a41b15;
+    width: 40%;
+    outline: none;
+}
+.paragraph{
+    margin: 8px;
+}
+.btn-for-signUp,.btn-for-signUp2,.btn-for-signUp3{
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-weight: 600;
+    font-family: Segoe UI ;
+    color: #fff;
+    padding: 5px;
+    border: none;
+    border-radius: 10px;
+    text-transform: uppercase;
+}
+.btn-for-signUp{
+    background-color: #f37021;    
+}
+.btn-for-signUp2{
+    background-color: #344f88;
+}
+.btn-for-signUp3{
+    background-color: #a41b15;
+}
+@media only screen and (max-width: 600px){
+    .singIn,.singIn2{
+        width: 470px;
+        margin-top: 45%;
+    }
+    .input-div{
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+    }
+    .SingUp-first-input-number{
+        width: 395px;
+    }
+    .SingUp-first-input{
+        margin-bottom: 10px;
+    }
+}

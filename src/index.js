@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+// import Two from "./Two/Two";
 
 import { Provider, useSelector, useDispatch } from "react-redux";
 import store from "./redux/store";

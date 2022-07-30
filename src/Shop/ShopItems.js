@@ -9,6 +9,7 @@ import {
   Col,
   Container,
   Row,
+  Spinner,
 } from "reactstrap";
 import { _fetchApi } from "../redux/action/api";
 import { addCart,updateCart } from "../redux/action/shop";
@@ -16,6 +17,7 @@ import { addCart,updateCart } from "../redux/action/shop";
 export default function ShopItems() {
 
   const {carts, cart}  = useSelector((s)=>s.shop)
+  const [loading, setLoading] = useState(true)
 
   const dispatch = useDispatch()
 
@@ -60,6 +62,7 @@ export default function ShopItems() {
       <Container>
         <Card className="mt-3 shop-main-card shadow">
           <p className="shop-card-title text-center">Select item to buy</p>
+         {loading && <center ><Spinner /> Loading, Please wait...</center >}
           <Row>
             {/* {JSON.stringify(itemList)} */}
             {itemList.map((item, index) => {
