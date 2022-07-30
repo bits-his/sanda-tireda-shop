@@ -17,7 +17,11 @@ import {
 } from "reactstrap";
 import logo from "../Images/logo.png";
 import { useNavigate } from "react-router";
-export default function ShopNavbar({ cart = [] }) {
+import { useSelector } from "react-redux";
+export default function ShopNavbar() {
+
+  const {carts}  = useSelector((s)=>s.shop)
+
   const [open, setOpen] = useState(false);
   const toggle = () => {
     setOpen(!open);
@@ -111,7 +115,7 @@ export default function ShopNavbar({ cart = [] }) {
               <li className="btn" onClick={() => navigate("/cart")}>
                 {/* <div className="cart-div"> */}
                 <ShoppingCart size="1.5em" /> Cart
-                <span className="cart-count">{cart.length}</span>
+                <span className="cart-count">{carts.length && carts.reduce((p, c) => p + c.qty,0)}</span>
                 {/* </div> */}
               </li>
             </ul>

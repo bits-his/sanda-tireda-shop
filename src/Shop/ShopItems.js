@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
+  Badge,
+  Button,
   Card,
   CardBody,
   CardFooter,
@@ -7,27 +10,43 @@ import {
   Container,
   Row,
 } from "reactstrap";
-export default function ShopItems({
-  cart = [],
-  addToCart = (f) => f,
-  onMinusClick = (f) => f,
-  onPlusClick = (f) => f,
-}) {
+import { _fetchApi } from "../redux/action/api";
+import { addCart,updateCart } from "../redux/action/shop";
+
+export default function ShopItems() {
+
+  const {carts, cart}  = useSelector((s)=>s.shop)
+
+  const dispatch = useDispatch()
+
+  const addToCart = useCallback((it) => {
+    console.log(it);
+    dispatch(addCart({...it, qty:1}));
+  });
+
+  const deleteCart = useCallback((it) => {
+    console.log(it);
+    dispatch(updateCart({...it, qty: cart.qty-1}));
+  });
+
+  const addOneItem = useCallback((it) => {
+    console.log(it);
+    dispatch(updateCart({...it, qty: cart.qty+1}));
+  });
+
   const [itemList, setItemList] = useState([]);
 
   const getItemList = () => {
-    fetch(
-      "https://yge.wvi.mybluehost.me/test/sanda-server/account/get/inventory2/d8d7a732-1832-4e25-9a98-e68ddc3f0b26?query_type=web"
-    )
-      .then((raw) => raw.json())
-      .then((data) => {
+    _fetchApi(
+      "/account/get/inventory2/d8d7a732-1832-4e25-9a98-e68ddc3f0b26?query_type=web",
+      (data) => {
         if (data.results && data.results.length) {
           setItemList(data.results);
         }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+      },
+    (e) => {
+      console.log(e);
+    })
   };
 
   useEffect(() => {
@@ -36,15 +55,17 @@ export default function ShopItems({
 
   return (
     <div style={{ paddingTop: 70, paddingBottom: 20 }}>
+
+    {/* {JSON.stringify({cart})} */}
       <Container>
         <Card className="mt-3 shop-main-card shadow">
           <p className="shop-card-title text-center">Select item to buy</p>
           <Row>
             {/* {JSON.stringify(itemList)} */}
             {itemList.map((item, index) => {
-              let selected = cart.find((a) => a.item_code === item.item_code);
+              let selected = carts.find((a) => a.item_code === item.item_code);
               return (
-                <Col md={2} classNae="mt-3">
+                <Col key={index} md={2} className="mt-3">
                   <Card className="item-card mb-3">
                     <CardBody className="item-card-body">
                       <div className="text-center">
@@ -66,34 +87,36 @@ export default function ShopItems({
                           : item.item_name}
                       </p>
                       <p className="item-price">₦{item.unit_price}</p>
+                      
                     </CardBody>
                     <CardFooter className="item-card-footer">
                       {selected ? (
                         <div className="q-div text-center">
-                          <button
+                          <Button
                             className="plus"
-                            onClick={() => onPlusClick(item)}
+                            onClick={() => addOneItem(item)}
                           >
                             +
-                          </button>
+                          </Button>
                           <p className="item-quantity">
                             {selected.selected_quantity}
                           </p>
-                          <button
+                          <Badge color="success">{item.qty}</Badge>
+                          <Button
                             className="minus"
-                            onClick={() => onMinusClick(item)}
+                            onClick={() => deleteCart(item)}
                           >
                             -
-                          </button>
+                          </Button>
                         </div>
                       ) : (
                         <div className="text-center">
-                          <button
+                          <Button
                             className="add"
-                            onClick={() => addToCart(item)}
+                            onClick={() =>{ addToCart(item)}}
                           >
                             Add to cart
-                          </button>
+                          </Button>
                         </div>
                       )}
                     </CardFooter>

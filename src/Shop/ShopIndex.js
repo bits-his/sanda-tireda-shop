@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { addCart } from "../redux/action/shop";
 import "./ShopIndex.css";
 import ShopItems from "./ShopItems";
 import ShopNavbar from "./ShopNavbar";
 
 export default function ShopIndex() {
   const [cart, setCart] = useState([]);
+  const [items, setItems] = useState([]);
 
-  const addToCart = (it) => {
-    setCart((prev) => [...prev, { ...it, selected_quantity: 1 }]);
-  };
+ 
+  const dispatch = useDispatch()
+
+  const addToCart = useCallback((it) => {
+    console.log(it);
+    dispatch(addCart(it));
+  });
 
   const onPlusClick = (it) => {
     let newCart = [];
@@ -40,11 +47,16 @@ export default function ShopIndex() {
     setCart(newCart);
   };
 
+  useEffect(()=>{
+    if(cart.item_code){
+      setItems((p)=>([...p,{cart}]))
+    }
+  },[cart])
   return (
     <div className="">
-      <ShopNavbar cart={cart} />
+      <ShopNavbar cart={cart.length} />
       <ShopItems
-        cart={cart}
+        cart={items}
         addToCart={addToCart}
         onMinusClick={onMinusClick}
         onPlusClick={onPlusClick}

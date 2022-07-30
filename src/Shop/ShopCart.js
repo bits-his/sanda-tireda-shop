@@ -1,12 +1,15 @@
 import React from "react";
 import { Delete, Trash, CheckCircle } from "react-feather";
-import { Card, Col, Row } from "reactstrap";
+import { Button, Card, Col, Row } from "reactstrap";
 
 import visa from "../Images/visa.png";
 import master from "../Images/master.png";
 import CartItems from "./CarCard";
 import CartCard from "./CarCard";
+import { useSelector } from "react-redux";
 export default function ShopCart() {
+
+  const {carts}  = useSelector((s)=>s.shop)
   return (
     <>
       <div
@@ -22,7 +25,7 @@ export default function ShopCart() {
                   <Row>
                     <Col md={6}>
                       <h4>
-                        Shopping Cart <span>(0)</span>
+                        Shopping Cart <span>({carts.length && carts.reduce((p, c) => p + c.qty,0)})</span>
                       </h4>
                     </Col>
                   </Row>
@@ -46,16 +49,16 @@ export default function ShopCart() {
           </Col>
           <Col md={4}>
             <Card className="shadow p-3 cart-right-card">
-              <h4>Sumarry</h4>
+              <h4>Summary</h4>
               <Row className="mt-4">
                 <Col md={4}>
                   <h6>Total</h6>
                 </Col>
                 <Col md={8}>
-                  <h4>NGN ₦ 21,212</h4>
+                  <h4>NGN ₦ {carts.length && carts.reduce((p, c) => p + (c.qty*c.unit_price),0)}</h4>
                 </Col>
               </Row>
-              <button className="check">Checkout (2)</button>
+              <Button className="check">Checkout ({carts.length && carts.reduce((p, c) => p + c.qty,0)})</Button>
             </Card>
             <Card className="shadow p-3 mt-3 cart-right-card">
               <h5>Payments Methods</h5>
