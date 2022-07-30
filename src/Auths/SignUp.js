@@ -1,40 +1,21 @@
 import React, { useState } from "react";
-import { Modal, ModalBody, } from 'reactstrap';
 import { Facebook, Mail } from "react-feather";
-import { useNavigate } from "react-router";
-import Login from "./LogIn";
 
 export default function SignUp(props){
-    const {
-      className
-    } = props;
+    const [check,setCheck] =  useState({})
+    const [form,setForm] =  useState({firstname:'',
+lastname:'',
+email:'',
+password:'',
+phonenumber:''})
 
-    const [modal, setModal] = useState(false);
-    const [nestedModal, setNestedModal] = useState(false);
-    const [closeAll, setCloseAll] = useState(false);
+const handleChange = ({target:{name,value}}) =>{
+    setForm({[name]:value})
+}
+const handleSubmit = ({target:{name,value}}) =>{
+    setForm({[name]:value})
+}
 
-    const toggle = () => setModal(!modal);
-    const toggleNested = () => {
-      setNestedModal(!nestedModal);
-      setCloseAll(false);
-    }
-    const [form , setForm] = useState({firstname: '',lastname: '', password: '',email: '',phonenumber:''})
-    const [check, setCheck]=useState(false)
-
-    const handleChange = ({target:{name,value}})=>{
-        setForm(p => ({
-            ...p, [name]:value
-        }))
-    }
-    const navigate = useNavigate();
-
-    const handleSubmit = ()=>{
-        let formChar = String
-        if(form.firstname===""|| form.lastname==="" || form.email==="" || form.password==="" || form.phonenumber==="" || form.firstname !== String){
-            alert("All value are required")
-        }
-        console.log(form)
-    }
     return(
         <div className="singIn2">
             <div>
@@ -147,10 +128,8 @@ export default function SignUp(props){
             </div>
             <div style={{display:"flex",flexDirection:"row",margin:10 }}>
                 <p>Already have an Account ?</p>
-                <button className="nessted" style={{marginLeft:15}}onClick={toggleNested}>LogIn</button>
-                <Modal isOpen={nestedModal} toggle={toggleNested} onClosed={closeAll ? toggle : undefined}>
-                      <ModalBody> <Login /> </ModalBody>
-                  </Modal>
+                <button className="nessted" style={{marginLeft:15}}>LogIn</button>
+               
             </div>
             </div>
         </div>

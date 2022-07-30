@@ -1,15 +1,22 @@
 import React from "react";
 import { Delete, Trash, CheckCircle } from "react-feather";
-import { Button, Card, Col, Row } from "reactstrap";
+import { Button, Card, Col, Modal, ModalBody, Row } from "reactstrap";
 
 import visa from "../Images/visa.png";
 import master from "../Images/master.png";
 import CartItems from "./CarCard";
 import CartCard from "./CarCard";
 import { useSelector } from "react-redux";
+import Login from "../SignUp/LogIn";
+import { useState } from "react";
 export default function ShopCart() {
 
   const {carts}  = useSelector((s)=>s.shop)
+
+  const [modal, setModal] = useState(false);
+
+  const toggle = () => setModal(!modal);
+
   return (
     <>
       <div
@@ -58,7 +65,12 @@ export default function ShopCart() {
                   <h4>NGN ₦ {carts.length && carts.reduce((p, c) => p + (c.qty*c.unit_price),0)}</h4>
                 </Col>
               </Row>
-              <Button className="check">Checkout ({carts.length && carts.reduce((p, c) => p + c.qty,0)})</Button>
+              <Button onClick={toggle} className="check">Checkout ({carts.length && carts.reduce((p, c) => p + c.qty,0)})</Button>
+              <Modal isOpen={modal} toggle={toggle}>
+                <ModalBody>
+                  <Login />
+                </ModalBody>
+            </Modal>
             </Card>
             <Card className="shadow p-3 mt-3 cart-right-card">
               <h5>Payments Methods</h5>
