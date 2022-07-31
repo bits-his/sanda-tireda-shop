@@ -1,137 +1,153 @@
 import React, { useState } from "react";
 import { Facebook, Mail } from "react-feather";
+import { useDispatch } from "react-redux";
+import { Button, Form, Input } from "reactstrap";
+import { signup } from "../redux/action/auth";
 
-export default function SignUp(props){
-    const [check,setCheck] =  useState({})
-    const [form,setForm] =  useState({firstname:'',
-lastname:'',
-email:'',
-password:'',
-phonenumber:''})
+export default function SignUp({ setType, toggle }) {
+	// const { auth:{authenticated} } = useSelector((s)=>s)
+	const dispatch = useDispatch()
+	const [form, setForm] = useState({
+		firstname: '',
+		lastname: '',
+		email: '',
+		password: '',
+		phone: '',
+		username: '',
+		branch_name: 'Online Store',
+		status:'approved',
+	})
 
-const handleChange = ({target:{name,value}}) =>{
-    setForm({[name]:value})
-}
-const handleSubmit = ({target:{name,value}}) =>{
-    setForm({[name]:value})
-}
+	const handleChange = ({ target: { name, value, type, checked } }) => {
 
-    return(
-        <div className="singIn2">
-            <div>
-            <h1 className="SingUp-first-header" >Create New Account</h1>
-            {/* {JSON.stringify(form)} */}
-            <div className="input-div" >
-                <input 
-                    className="SingUp-first-input" 
-                    type="text" 
-                    placeholder="First Name" 
-                    name="firstname"
-                    value={form.firstname}
-                    onChange={handleChange}
-                />
-                <input 
-                    className="SingUp-first-input" 
-                    type="text" 
-                    placeholder="Last Name"
-                    name="lastname"
-                    value={form.lastname}
-                    onChange={handleChange}
-                />
-            </div>
-            <div className="input-div" >
-                <input 
-                    className="SingUp-first-input" 
-                    type="Email" 
-                    placeholder="Email" 
-                    name="email"
-                    value={form.email}
-                    onChange={handleChange}
-                />
-                <input 
-                    className="SingUp-first-input" 
-                    type="password" 
-                    placeholder="Password"
-                    name="password"
-                    value={form.password}
-                    onChange={handleChange} 
-                />
-            </div>
-            <div>
-                <p className="span" >+234
-                    <input 
-                        type="number" 
-                        placeholder="Phone Number"  
-                        className="SingUp-first-input-number"
-                        name="phonenumber"
-                        value={form.phonenumber}
-                        onChange={handleChange} 
-                    />
-                </p>
-            </div>
-            <div style={{display:"flex",flexDirection:"row" }}>
-                <label 
-                style={{
-                    marginLeft:15,
-                    marginBottom: 10
+		setForm((s)=>({...s, [name]: type === 'checked' ? checked : value }))
+	}
+	const handleSubmit = (e) => {
+		e.preventDefault()
+		console.log(form);
+		dispatch(signup(form,()=>{toggle()}))
+	}
 
-                }}>
-                    <input 
-                        style={{
-                            cursor:"pointer" ,
-                            marginLeft: 4
-                        }}
-                        type="checkbox" 
-                        name="check"
-                        checked={check}
-                        value={check}
-                        onChange={() => setCheck(!check)} 
-                    />
-                    <span 
-                        style={{
-                            marginLeft:10
-                        }} 
-                    className="cursor" 
-                    >I accecpt the
-                    </span>
-                    <a href="" 
-                        className="href" 
-                        style={{
-                            marginLeft:4
-                        }} >Term & Condition</a>and Privacy and Cookie Notice.
-                </label>
-            </div>
-            <div style={{display:"flex",flexDirection:"column" }}>
-                <button 
-                    onClick={handleSubmit}
-                    className="btn-for-signUp" 
-                >Sign Up</button>
-                <button className="btn-for-signUp2" >
-                    <Facebook 
-                style={{
-                    color:"#344f88",
-                    width:18, 
-                    height:17, 
-                    borderRadius:4,
-                    float:"left",
-                    margin:3 }} /> Sign Up with facebook</button>
-                <button className="btn-for-signUp3">
-                    <Mail 
-                style={{
-                    color:"#fff",
-                    width:18, 
-                    height:17, 
-                    borderRadius:4,
-                    float:"left",
-                    margin:3,
-                    backgroundColor:"#a41b15" }}/>Sign up with google</button>
-            </div>
-            <div style={{display:"flex",flexDirection:"row",margin:10 }}>
-                <p>Already have an Account ?</p>
-                <button className="nessted" style={{marginLeft:15}}>LogIn</button>
-               
-            </div>
-            </div>
-        </div>
-    )
+	return (
+		<Form onSubmit={handleSubmit}>
+			<div className="singIn2">
+				<div>
+					<h1 className="SingUp-first-header" >Create New Account</h1>
+					{/* {JSON.stringify(form)} */}
+					<div className="input-div" >
+						<Input
+							className="SingUp-first-input"
+							type="text"
+							placeholder="First Name"
+							name="firstname"
+							value={form.firstname}
+							onChange={handleChange}
+						/>
+						<Input
+							className="SingUp-first-input"
+							type="text"
+							placeholder="Last Name"
+							name="lastname"
+							value={form.lastname}
+							onChange={handleChange}
+						/>
+					</div>
+					<div className="input-div" >
+						<Input
+							type="text"
+							placeholder="Phone Number (+234)"
+							className="SingUp-first-input"
+							name="phone"
+							value={form.phone}
+							onChange={handleChange}
+						/>
+						<Input
+							className="SingUp-first-input"
+							type="Email"
+							placeholder="Email"
+							name="email"
+							value={form.email}
+							onChange={handleChange}
+						/>
+					</div>
+
+					<div className="input-div" >
+						<Input
+							className="SingUp-first-input"
+							type="textarea" 
+							name="address"
+							value={form.address}
+							placeholder="Address" 
+							onChange={handleChange}
+						/>
+					</div>
+					<div className="input-div" >
+						<Input
+							className="SingUp-first-input"
+							type="text"
+							placeholder="Username"
+							name="username"
+							value={form.username}
+							onChange={handleChange}
+						/>
+						<Input
+							className="SingUp-first-input"
+							type="text"
+							placeholder="Password"
+							name="password"
+							value={form.password}
+							onChange={handleChange}
+						/>
+					</div>
+					<div style={{ display: "flex", flexDirection: "row" }}>
+						<label
+							style={{
+								marginLeft: 15,
+								marginBottom: 10
+
+							}}>
+							<Input
+								style={{
+									cursor: "pointer",
+									marginLeft: 4
+								}}
+								type="checkbox"
+								name="accepted_terms"
+								checked={form.accepted_terms}
+								value={form.accepted_terms}
+								onChange={handleChange}
+							/>
+							<span
+								style={{
+									marginLeft: 10
+								}}
+								className="cursor"
+							>I accecpt the
+							</span>
+							<a href=""
+								className="href"
+								style={{
+									marginLeft: 4
+								}} >Term & Condition</a>and Privacy and Cookie Notice.
+						</label>
+					</div>
+					<div style={{ display: "flex", flexDirection: "column" }}>
+						<button
+							onClick={handleSubmit}
+							className="btn-for-signUp"
+						>Sign Up</button>
+						<br />
+						<p className="text-center">- OR -</p>
+						<br />
+						<Button className="btn-for-signUp3"><Mail style={{ color: "#fff", width: 18, height: 17, borderRadius: 4, float: "left", margin: 3 }} />Login with Google</Button>
+						<Button className="btn-for-signUp2"><Facebook style={{ color: "#FFFFFF", width: 18, height: 17, borderRadius: 4, float: "left", margin: 3 }} />Login With Facebook</Button>
+					</div>
+					<div style={{ display: "flex", flexDirection: "row", margin: 10 }}>
+						<p>Already have an Account ?</p>
+						<button type="button" onClick={() => setType('Login')} className="nessted" style={{ marginLeft: 15 }}>LogIn</button>
+					</div>
+				</div>
+			</div>
+		</Form>
+	)
 }

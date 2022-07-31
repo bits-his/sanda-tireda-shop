@@ -1,21 +1,31 @@
 import React from "react";
-import { Delete, Trash, CheckCircle } from "react-feather";
-import { Button, Card, Col, Modal, ModalBody, Row } from "reactstrap";
+import { Trash, CheckCircle } from "react-feather";
+import { Badge, Button, Card, Col, Modal, ModalBody, Row } from "reactstrap";
 
 import visa from "../Images/visa.png";
 import master from "../Images/master.png";
-import CartItems from "./CarCard";
-import CartCard from "./CarCard";
-import { useSelector } from "react-redux";
-import Login from "../SignUp/LogIn";
+import CartCard from "./CartCard";
+import { useDispatch, useSelector } from "react-redux";
+import AuthModal from "../Auths/AuthModal";
 import { useState } from "react";
+import { _postApi } from "../redux/action/api";
+import { deleteCarts } from "../redux/action/shop";
 export default function ShopCart() {
-
-  const {carts}  = useSelector((s)=>s.shop)
-
+  const {shop:{carts}, auth:{authenticated,user} } = useSelector((s)=>s)
+  const dispatch = useDispatch()
+  const [auth_type, setAuthType] = useState('Login');
   const [modal, setModal] = useState(false);
-
   const toggle = () => setModal(!modal);
+
+  const checkout = () =>{
+    const data = carts.map((dt)=>({...dt,requisition_type:'walk-in',branch_id:user.id}))
+    _postApi('/orders/walk-in', data,
+    (res)=>{
+      console.log(res)
+      dispatch(deleteCarts())
+    },
+    (err)=>console.error(err))
+  }
 
   return (
     <>
@@ -32,17 +42,22 @@ export default function ShopCart() {
                   <Row>
                     <Col md={6}>
                       <h4>
-                        Shopping Cart <span>({carts.length && carts.reduce((p, c) => p + c.qty,0)})</span>
+                       Order checkout
+                      </h4>
+                    </Col>
+                    <Col md={6}>
+                      <h4 className="text-right">
+                       Items in cart <Badge>{carts.length && carts.reduce((p, c) => p + c.qty,0)}</Badge>
                       </h4>
                     </Col>
                   </Row>
                   <hr></hr>
                   <Row className="">
                     <Col md={6}>
-                      <label class="container1" style={{}}>
+                      <label className="container1" style={{}}>
                         Select all items
                         <input type="radio" name="radio" />
-                        <span class="checkmark"></span>
+                        <span className="checkmark"></span>
                       </label>
                     </Col>
                     <Col md={6}>
@@ -65,10 +80,10 @@ export default function ShopCart() {
                   <h4>NGN ₦ {carts.length && carts.reduce((p, c) => p + (c.qty*c.unit_price),0)}</h4>
                 </Col>
               </Row>
-              <Button onClick={toggle} className="check">Checkout ({carts.length && carts.reduce((p, c) => p + c.qty,0)})</Button>
+              <Button onClick={()=>{authenticated?checkout(): toggle()}} className="check">Checkout ({carts.length && carts.reduce((p, c) => p + c.qty,0)})</Button>
               <Modal isOpen={modal} toggle={toggle}>
                 <ModalBody>
-                  <Login />
+                  <AuthModal type={auth_type} toggle={toggle} setType={setAuthType} />
                 </ModalBody>
             </Modal>
             </Card>
@@ -76,10 +91,10 @@ export default function ShopCart() {
               <h5>Payments Methods</h5>
               <Row className="">
                 <Col md={2}>
-                  <img src={master} />
+                  <img alt='Master' src={master} />
                 </Col>
                 <Col md={2}>
-                  <img src={visa} mar />
+                  <img alt='Visa' src={visa} mar />
                 </Col>
               </Row>
               <hr></hr>

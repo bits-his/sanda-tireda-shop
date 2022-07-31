@@ -5,6 +5,7 @@ import ShopNavbar from "../ShopNavbar";
 import AccountSidebar from "./AccountSidebar";
 import "./Dashboard.css";
 export default function Account() {
+  
   return (
     <div
       className="container"

@@ -1,7 +1,8 @@
 import React from "react";
-import { Card } from "reactstrap";
+import { Card, NavItem } from "reactstrap";
 import { useLocation, useNavigate } from "react-router";
-import { DollarSign, Grid, Settings, ShoppingBag, User } from "react-feather";
+import { Grid, Settings, ShoppingBag, User } from "react-feather";
+import { Link } from "react-router-dom";
 export default function AccountSidebar() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -24,8 +25,7 @@ export default function AccountSidebar() {
             </li>
             <li  className={`active1 ${
                 location.pathname === "/account/orders" && "active_sidebar"
-              }`}
-              onClick={() => navigate("orders")}>
+              }`}>
               <ShoppingBag size="1.3em" className="sidebar-icon" /> Orders
             </li>
             <li
@@ -36,8 +36,12 @@ export default function AccountSidebar() {
             >
               <Grid size="1.3em" className="sidebar-icon" /> Overview
             </li>
-            <li>
-              <Settings size="1.3em" className="sidebar-icon" /> Settings
+            <li className={`active1 ${
+                location.pathname === "/account/settings" && "active_sidebar"
+              }`}
+              onClick={() => navigate("settings")}>
+              <Settings size="1.3em" className="sidebar-icon"
+               /> Settings
             </li>
           </ul>
         </div>

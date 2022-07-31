@@ -18,6 +18,7 @@ export const _postApi = (url, data = {}, success = (f) => f, error = (f) => f) =
   fetch(apiURL + url, {
     method: "POST",
     headers: { "Content-Type": "application/json", authorization: token },
+    body:JSON.stringify(data)
   })
     .then((response) => {
       console.log({ response });

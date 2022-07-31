@@ -16,23 +16,25 @@ import { addCart,updateCart } from "../redux/action/shop";
 
 export default function ShopItems() {
 
-  const {carts, cart}  = useSelector((s)=>s.shop)
+  const {carts}  = useSelector((s)=>s.shop)
   const [loading, setLoading] = useState(true)
+  const [cart, setCart] = useState({})
 
   const dispatch = useDispatch()
 
   const addToCart = useCallback((it) => {
-    console.log(it);
+    console.log({...it, qty:1});
+    setCart({...it, qty:1})
     dispatch(addCart({...it, qty:1}));
   });
 
   const deleteCart = useCallback((it) => {
-    console.log(it);
+    setCart({...it,  qty: cart.qty-1})
     dispatch(updateCart({...it, qty: cart.qty-1}));
   });
 
-  const addOneItem = useCallback((it) => {
-    console.log(it);
+  const addCartItem = useCallback((it) => {
+    setCart({...it,  qty: cart.qty+1})
     dispatch(updateCart({...it, qty: cart.qty+1}));
   });
 
@@ -43,6 +45,7 @@ export default function ShopItems() {
       "/account/get/inventory2/d8d7a732-1832-4e25-9a98-e68ddc3f0b26?query_type=web",
       (data) => {
         if (data.results && data.results.length) {
+          setLoading(false)
           setItemList(data.results);
         }
       },
@@ -97,7 +100,7 @@ export default function ShopItems() {
                         <div className="q-div text-center">
                           <Button
                             className="plus"
-                            onClick={() => addOneItem(item)}
+                            onClick={() => addCartItem(item)}
                           >
                             +
                           </Button>

@@ -13,7 +13,7 @@ import { apiURL, _postApi } from "./api";
 export function signup(objs = {}, success = (f) => f, error = (f) => f) {
   return (dispatch) => {
     dispatch({ type: LOADING_SIGNUP });
-    fetch(`${apiURL}/users/create`, {
+    fetch(`${apiURL}/api/auth/sign-up/dashboard`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,9 +25,8 @@ export function signup(objs = {}, success = (f) => f, error = (f) => f) {
         dispatch({ type: LOADING_SIGNUP });
         if (data.success) {
           dispatch(
-            login(
-              objs.email,
-              objs.password,
+            login({email:objs.email,
+              password:objs.password},
               (data) => {
                 success(data);
                 const { user, token } = data;
@@ -60,10 +59,10 @@ export function signup(objs = {}, success = (f) => f, error = (f) => f) {
   };
 }
 
-export function login({ email, password, history }, success, error) {
+export function login({ email, password }, success, error) {
   return (dispatch) => {
-    dispatch({ type: LOADING_LOGIN });
-    fetch(`${apiURL}/users/login`, {
+    // dispatch({ type: LOADING_LOGIN });
+    fetch(`${apiURL}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -72,8 +71,8 @@ export function login({ email, password, history }, success, error) {
     })
       .then((raw) => raw.json())
       .then((data) => {
-        // console.log(data);
-        dispatch({ type: LOADING_LOGIN });
+        console.log(data);
+        // dispatch({ type: LOADING_LOGIN });
         if (data.success) {
           const { token } = data;
           getUserProfile(token)
@@ -89,20 +88,20 @@ export function login({ email, password, history }, success, error) {
                   localStorage.setItem("@@bits_lis", JSON.stringify(token));
                 }
                 success(data);
-                history("/admin/");
+                // history("/admin/");
               }
             })
             .catch((err) => {
-              error();
+              error(err);
             });
         } else {
-          dispatch({ type: ERROR_MESSAGE, payload: data.msg });
+          dispatch({ type: ERROR_MESSAGE, payload: data });
           error(data.error);
           console.log(data);
         }
       })
       .catch((err) => {
-        dispatch({ type: LOADING_LOGIN });
+        dispatch({ type: LOADING_LOGIN, payload:err });
         // console.log(err)
       });
   };
@@ -111,7 +110,7 @@ export function login({ email, password, history }, success, error) {
  async function getUserProfile(_token) {
   try {
     // console.log(_token);
-    let response = await fetch(`${apiURL}/user/verify`, {
+    let response = await fetch(`${apiURL}/auth/verify-token`, {
       method: "GET",
       headers: {
         authorization: _token,
@@ -125,7 +124,7 @@ export function login({ email, password, history }, success, error) {
   }
 }
 
-export function init(history, callback = (f) => f) {
+export function init(callback = (f) => f) {
   return (dispatch) => {
     let token = localStorage.getItem("@@bits_lis");
     // dispatch({ type: START_LOADING_APP });
@@ -145,7 +144,7 @@ export function init(history, callback = (f) => f) {
             const { user } = data;
             dispatch({ type: SET_USER, payload: user });
 
-            history("/admin/");
+            // history("/admin/");
           } else {
             /**
              * Token is invalid
@@ -154,7 +153,7 @@ export function init(history, callback = (f) => f) {
             callback();
             // console.log(err)
             localStorage.removeItem("@@bits_lis");
-            history("/");
+            // history("/");
             // console.log('Token expired');
           }
         })
@@ -169,17 +168,17 @@ export function init(history, callback = (f) => f) {
        * navigate user to auth page
        */
       callback();
-      history("/");
+      // history("/");
       // dispatch({ type: STOP_LOADING_APP });
     }
   };
 }
 
-export function logout(history) {
+export function logout() {
   return (dispatch) => {
     localStorage.removeItem("@@bits_lis");
     dispatch({ type: LOGOUT });
-    history("/");
+    // history("/");
   };
 }
 // export function setToken({ user, token }) {

@@ -4,15 +4,15 @@
 .singIn{
     /* width: 550px; */
     margin: auto;
-    margin-top: 10%;
+    margin-top: 2%;
     display: flex;
     flex-direction: column;
 }
 .Login-first-header{
     text-align: center;
     color: #f37021;
-    margin-top: 30px;
-    margin-bottom: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .Login-first-input{
     margin: 10px;
@@ -69,7 +69,7 @@ label{
 .singIn2{
     /* width: 650px; */
     margin: auto;
-    margin-top: 10%;
+    margin-top: 2%;
 }
 .input-div{
     display: flex;
@@ -79,7 +79,7 @@ label{
 .SingUp-first-header{
     text-align: center;
     font-size: 25px;
-    margin-bottom: 70px;
+    margin-bottom: 20px;
     color: #a41b15;
 }
 .SingUp-first-input{

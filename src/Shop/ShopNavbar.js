@@ -8,23 +8,26 @@ import {
 } from "react-feather";
 import {
   Button,
-  CardText,
   Col,
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
+  Modal,
+  ModalBody,
   NavItem,
   Row,
 } from "reactstrap";
 import logo from "../Images/logo.png";
 import { useNavigate } from "react-router";
-import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/action/auth";
+import AuthModal from "../Auths/AuthModal";
 export default function ShopNavbar() {
 
   const {shop:{carts}, auth:{user, authenticated}}  = useSelector((s)=>s)
-
+  const [auth_type, setAuthType] = useState('Login');
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const toggle = () => {
     setOpen(!open);
@@ -33,6 +36,12 @@ export default function ShopNavbar() {
   const toggle1 = () => {
     setOpen1(!open1);
   };
+
+
+  const [modal, setModal] = useState(false);
+  const toggleModal = () => setModal(!modal);
+
+
   const navigate = useNavigate();
   return (
     <div>
@@ -66,7 +75,7 @@ export default function ShopNavbar() {
                       color: "rgb(99, 99, 99)",
                     }}
                   >
-                    <User size="1.5em" /> Account <ChevronDown />
+                    <User size="1.5em" />{user.username||user.email}<ChevronDown />
                   </DropdownToggle>
                   <DropdownMenu className="drop-down-menu">
                     {/* <DropdownItem header>Settings & Privacy</DropdownItem> */}
@@ -78,12 +87,12 @@ export default function ShopNavbar() {
                       Orders
                     </DropdownItem>
                     <DropdownItem className="drop-down-item" divider />
-                    <DropdownItem className="drop-down-item">
+                    <DropdownItem onClick={(e)=>{e.preventDefault(); dispatch(logout())}} className="drop-down-item">
                       Sign Out
                     </DropdownItem>
                   </DropdownMenu>
                 </Dropdown>):(<NavItem>
-                  <Button className="btn-default">Login</Button>
+                  <Button onClick={()=>toggleModal()} className="btn-default">Login</Button>
               </NavItem>)}
               </li>
               <li>
@@ -124,6 +133,11 @@ export default function ShopNavbar() {
           </nav>
         </Col>
       </Row>
+      <Modal isOpen={modal} toggle={toggleModal}>
+                <ModalBody>
+                  <AuthModal type={auth_type} toggle={toggleModal} setType={setAuthType} />
+                </ModalBody>
+            </Modal>
     </div>
   );
 }

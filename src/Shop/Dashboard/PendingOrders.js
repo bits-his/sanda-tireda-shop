@@ -1,6 +1,5 @@
 import React from "react";
-import { Edit } from "react-feather";
-import { Card, Col, Row } from "reactstrap";
+import { Button, Card, Col, Row } from "reactstrap";
 import { items } from "../Items";
 
 export default function PendingOrders() {
@@ -11,7 +10,7 @@ export default function PendingOrders() {
           <Card className="shadow-sm profile-card">
             <Row className="p-2">
               <Col md={10}>
-                <h6>Pending</h6>
+                <h6>Pending order items</h6>
               </Col>
               <Col md={2}>
                 {/* <Edit className="profile-icon" size="1.3em" title="edit" /> */}
@@ -21,7 +20,7 @@ export default function PendingOrders() {
             <div>
               <Row>
                 {items.map((item, index) => (
-                  <Col md={6}>
+                  <Col md={6} key={index}>
                     <Card className="shadow-sm orders-card m-2 p-3">
                       <Row>
                         <Col md={4}>
@@ -49,9 +48,7 @@ export default function PendingOrders() {
                           >
                             NGN ₦<span>{item.item_price}</span>
                           </p>
-                          <button className="cancel-btn shadow-sm">
-                            Cancel
-                          </button>
+                          {" "} <Button className="btn btn-sm btn-warning">Cancel</Button>
                         </Col>
                       </Row>
                     </Card>

@@ -1,34 +1,22 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { Badge, Button, Card, Col, Row } from "reactstrap";
-import { items } from "./Items";
-import { Delete, Trash, CheckCircle } from "react-feather";
+import { Trash } from "react-feather";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCart } from "../redux/action/shop";
 
 export default function CartCard() {
-
-  const {carts, cart}  = useSelector((s)=>s.shop)
-
+  const {carts}  = useSelector((s)=>s.shop)
   const dispatch = useDispatch()
+  const [cart,setCart] = useState({})
 
-  const deleteOneItem = useCallback((it) => {
-    console.log(it);
-    dispatch(deleteCart({...it, qty:1}));
+  const deleteCartItem = useCallback((it) => {
+    setCart({...it,  qty: cart.qty-1})
+    dispatch(updateCart({...it, qty: cart.qty-1}));
   });
 
-  const selectCart = useCallback((it) => {
-    console.log(it);
-    dispatch(deleteCart(it));
-  });
-
-  const deleteCart = useCallback((it) => {
-    console.log(it);
-    dispatch(updateCart({...it, qty: it.qty-1}));
-  });
-
-  const addOneItem = useCallback((it) => {
-    console.log(it);
-    dispatch(updateCart({...it, qty: it.qty+1}));
+  const addCartItem = useCallback((it) => {
+    setCart({...it,  qty: cart.qty+1})
+    dispatch(updateCart({...it, qty: cart.qty+1}));
   });
 
   return (
@@ -36,7 +24,7 @@ export default function CartCard() {
       <Row>
         <Col md={12}>
           {carts.length ? carts.map((item, index) => (
-            <Card className="shadow cart-left-card mt-4 px-3 py-3" onMouseHover={()=>selectCart(item)}>
+            <Card key={index} className="shadow cart-left-card mt-4 px-3 py-3">
               <Row>
                 <Col md={1}>
                   <label className="container1" style={{ marginTop: 40 }}>
@@ -95,6 +83,7 @@ export default function CartCard() {
                             width: 25,
                             fontWeight: "bold",
                           }}
+                          onClick={()=>deleteCartItem(item)}
                         >
                           -
                         </Button>
@@ -107,7 +96,7 @@ export default function CartCard() {
                             width: 25,
                             fontWeight: "bold",
                           }}
-                          onClick={()=>addOneItem(item)}
+                          onClick={()=>addCartItem(item)}
                         >
                           +
                         </Button>

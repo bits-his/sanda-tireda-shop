@@ -1,8 +1,12 @@
 import React from "react";
-import { Edit, Mail, Phone, User } from "react-feather";
+import { Edit } from "react-feather";
+import { useSelector } from "react-redux";
 import { Card, Col, Row } from "reactstrap";
 import profile from "../../Images/ysquareimperial.png";
 export default function AccountHome() {
+
+  const { auth:{user}}  = useSelector((s)=>s)
+
   return (
     <div>
       <Card className="sidebar-card px-4 py-4 shadow-sm">
@@ -21,8 +25,8 @@ export default function AccountHome() {
                 <hr style={{ margin: 0, padding: 0 }}></hr>
                 <div className="p-2">
                   <h4 style={{ fontWeight: "", margin: 0, padding: 0 }}>
-                    <img className="profile-pic" src={profile} alt="" /> Yasir
-                    Ado Hassan
+                    <img className="profile-pic" src={profile} alt="" /> 
+                    {user.firstname} {user.lastname}
                   </h4>
                   <p
                     className=""
@@ -33,7 +37,7 @@ export default function AccountHome() {
                       padding: 0,
                     }}
                   >
-                    +234 9018661696
+                    {user.phone}
                   </p>
                   <p
                     style={{
@@ -43,7 +47,7 @@ export default function AccountHome() {
                       color: "grey",
                     }}
                   >
-                    ysquare.theimperial@gmail.com
+                    {user.email}
                   </p>
                 </div>
               </Card>
@@ -61,13 +65,13 @@ export default function AccountHome() {
                 <hr style={{ margin: 0, padding: 0 }}></hr>
                 <div className="p-2">
                   <p style={{ fontWeight: "bold", margin: 0, padding: 0 }}>
-                    Yasir Ado Hassan<span>, +234 9018661696</span>
+                    {user.username}<span>, {user.phone}</span>
                   </p>
                   <p style={{ margin: 0, padding: 0, fontSize: 13 }}>
-                    Kano Post Office
+                    {user.address}
                   </p>
                   <p style={{ margin: 0, padding: 0, fontSize: 13 }}>
-                    Kano Nigeria
+                  {user.state}
                   </p>
                 </div>
               </Card>

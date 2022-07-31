@@ -7,7 +7,8 @@ import {
   UPDATE_CART,
   DELETE_CART,
   ORDER_ERROR,
-  ORDER_RESP
+  ORDER_RESP,
+  DELETE_CARTS
 } from "./type";
 
 export function addCart(payload = {}) {
@@ -24,6 +25,13 @@ export function updateCart(payload = {}) {
 export function deleteCart(payload = {}) {
   return (dispatch) => {
     dispatch({ type: DELETE_CART, payload })
+  }
+}
+
+
+export function deleteCarts() {
+  return (dispatch) => {
+    dispatch({ type: DELETE_CARTS })
   }
 }
 

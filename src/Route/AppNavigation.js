@@ -2,11 +2,11 @@ import { useRoutes } from "react-router-dom";
 import Account from "../Shop/Dashboard/Account";
 import AccountHome from "../Shop/Dashboard/AccountHome";
 import Orders from "../Shop/Dashboard/Orders";
-import Overview from "../Shop/Dashboard/Overview";
+// import Overview from "../Shop/Dashboard/Overview";
 import ShopCart from "../Shop/ShopCart";
 import ShopItems from "../Shop/ShopItems";
-import Login from "../SignUp/LogIn";
-import SignUp from "../SignUp/SignUp";
+import Login from "../Auths/LogIn";
+import SignUp from "../Auths/SignUp";
 import AppIndex from "./AppIndex";
 
 function AppNavigation() {
@@ -36,6 +36,18 @@ function AppNavigation() {
       element: <Account />,
       children: [
         { index: true, element: <AccountHome /> },
+        {
+          path: "orders",
+          element: <Orders />,
+        },
+        {
+          path: "overview",
+          element: <Orders />,
+        },
+        {
+          path: "settings",
+          element: <Orders />,
+        },
       ]
     }
   ]);

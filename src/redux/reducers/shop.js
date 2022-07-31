@@ -1,6 +1,7 @@
 import { CARTS_LIST, CART_ITEM, ADD_CART, UPDATE_CART, 
     DELETE_CART,
-    ORDER_ERROR
+    ORDER_ERROR,
+    DELETE_CARTS
  } from "../action/type";
 
 const initialState = {
@@ -37,6 +38,12 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 carts: [...state.carts.filter((ct)=>ct.item_code!==action.payload.item_code) ]
+            };
+        case DELETE_CARTS:
+            return {
+                ...state,
+                carts: [],
+                cart:{}
             };
         case ORDER_ERROR:
             return {
