@@ -12,25 +12,30 @@ import {
 import bag from "../Images/bag.png";
 import shoebag from "../Images/shoebag.png";
 import shoe from "../Images/shoe.png";
+import { Spinner } from "react-bootstrap";
 export default function ShopItems({
   cart = [],
   addToCart = (f) => f,
   onMinusClick = (f) => f,
   onPlusClick = (f) => f,
 }) {
+  const [loading, setLoading] = useState(false)
   const [itemList, setItemList] = useState([]);
 
   const getItemList = () => {
+    setLoading(true)
     fetch(
       "https://yge.wvi.mybluehost.me/test/sanda-server/account/get/inventory2/d8d7a732-1832-4e25-9a98-e68ddc3f0b26?query_type=web"
     )
       .then((raw) => raw.json())
       .then((data) => {
+        setLoading(false)
         if (data.results && data.results.length) {
           setItemList(data.results);
         }
       })
       .catch((e) => {
+        setLoading(false)
         console.log(e);
       });
   };
@@ -44,6 +49,7 @@ export default function ShopItems({
       <Container>
         <Card className="mt-3 shop-main-card">
           <p className="shop-card-title text-center">Select item to buy</p>
+         {loading && <center ><Spinner /> Loading, Please wait...</center >}
           <Row>
             {/* {JSON.stringify(itemList)} */}
             {itemList.map((item, index) => {

@@ -1,12 +1,27 @@
-import React from "react";
-import { Delete, Trash,CheckCircle } from "react-feather";
+import React, { useState } from 'react';
+import { Modal, ModalBody, } from 'reactstrap';
+import { Trash,CheckCircle } from "react-feather";
 import { Card, Col, Row } from "reactstrap";
 import bag from "../Images/bag.png";
 import shoebag from "../Images/shoebag.png";
 import shoe from "../Images/shoe.png";
 import visa from "../Images/visa.png";
 import master from "../Images/master.png";
-export default function ShopCart() {
+import Login from '../SignUp/LogIn';
+export default function ShopCart(props) {
+    const {
+      className
+    } = props;
+
+    const [modal, setModal] = useState(false);
+    const [nestedModal, setNestedModal] = useState(false);
+    const [closeAll, setCloseAll] = useState(false);
+
+    const toggle = () => setModal(!modal);
+    const toggleNested = () => {
+      setNestedModal(!nestedModal);
+      setCloseAll(false);
+    }
   const items = [
     {
       item_image: bag,
@@ -167,7 +182,12 @@ export default function ShopCart() {
                 <h4>NGN ₦ 21,212</h4>
               </Col>
             </Row>
-            <button className="check">Checkout(2)</button>
+            <button className="check" onClick={toggle}>Checkout(2)</button>
+            <Modal isOpen={modal} toggle={toggle} className={className}>
+                <ModalBody>
+                  <Login />
+                </ModalBody>
+            </Modal>
           </Card>
           <Card className="shadow p-3 mt-3 cart-right-card">
             <h5>Payments Methods</h5>
