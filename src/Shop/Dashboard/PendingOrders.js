@@ -1,8 +1,8 @@
 import React from "react";
 import { Button, Card, Col, Row } from "reactstrap";
-import { items } from "../Items";
+// import { items } from "../Items";
 
-export default function PendingOrders() {
+export default function PendingOrders({orders}) {
   return (
     <div className="">
       <Row>
@@ -19,13 +19,16 @@ export default function PendingOrders() {
             <hr style={{ margin: 0, padding: 0 }}></hr>
             <div>
               <Row>
-                {items.map((item, index) => (
+                {orders.map((item, index) => (
                   <Col md={6} key={index}>
                     <Card className="shadow-sm orders-card m-2 p-3">
                       <Row>
                         <Col md={4}>
                           <img
-                            src={item.item_image}
+                          src={
+                            "https://yge.wvi.mybluehost.me/test/sanda-server/" +
+                            item.item_image
+                          }
                             alt=""
                             style={{
                               margin: "auto",

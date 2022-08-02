@@ -20,12 +20,13 @@ const initialState = {
   loadingApp: false,
 };
 
-export default (state = initialState, action) => {
+const reducer =  (state = initialState, action)=>{
   switch (action.type) {
     case SET_USER:
       return {
         ...state,
-        user: action.payload,
+        user: action.payload.user,
+        customer: action.payload.customer?.accountNo?action.payload.customer:{},
         authenticated: true,
       };
     case LOADING_LOGIN:
@@ -63,3 +64,5 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+export default reducer

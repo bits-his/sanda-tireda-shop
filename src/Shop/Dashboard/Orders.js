@@ -1,32 +1,49 @@
-import React, { useState } from "react";
-import { Edit, Mail, Phone, User, Trash } from "react-feather";
-import { Button, Card, Col, Row } from "reactstrap";
-import profile from "../../Images/ysquareimperial.png";
-import { items } from "../Items";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+
+import { Button, Card } from "reactstrap";
+import { _fetchApi } from "../../redux/action/api";
 // import "react-tabs/style/react-tabs.css";
 import PendingOrders from "./PendingOrders";
 import RecievedOrders from "./RecievedOrders";
 export default function Orders() {
   const [select, setSelect] = useState(2);
+  const [orders, setOrders] = useState([]);
+  const { customer } = useSelector((s) => s.auth)
+
+  const listOrders = (id) => {
+    if (id && orders.length<1) {
+      _fetchApi(`/orders/get-order?request_by=${id}`, (resp) => {
+        setOrders(resp.data)
+      }, (error) => {
+        console.error(error);
+      })
+    }
+  };
+
+  useEffect(() => {
+    listOrders(customer?.accountNo)
+  });
+
   return (
     <div className="">
+      {/* {JSON.stringify({ orders })} */}
       <Card className="sidebar-card px-4 py-4 shadow-sm orders-div">
         <div>
-          <button
+          <Button
             onClick={() => setSelect(2)}
             className={select === 2 ? "selected" : "not-selected"}
           >
             Pending Order
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() => setSelect(3)}
             className={select === 3 ? "selected" : "not-selected"}
           >
             Received Order
-          </button>
+          </Button>
         </div>
-        {select === 2 ? <PendingOrders /> : <RecievedOrders />}
+        {select === 2 ? <PendingOrders orders={orders.filter(or=>or.req_status==='pending')} /> : <RecievedOrders  orders={orders.filter(or=>or.req_status==='approved')} />}
       </Card>
     </div>
   );

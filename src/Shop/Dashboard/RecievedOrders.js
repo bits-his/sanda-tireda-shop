@@ -1,8 +1,8 @@
 import React from "react";
 import { Button, Card, Col, Row } from "reactstrap";
-import { items } from "../Items";
+// import { items } from "../Items";
 
-export default function RecievedOrders() {
+export default function RecievedOrders({orders}) {
   return (
     <div className="" >
       <Row className="">
@@ -19,13 +19,16 @@ export default function RecievedOrders() {
             <hr style={{ margin: 0, padding: 0 }}></hr>
 
             <Row className="">
-              {items.map((item, index) => (
+              {orders.map((item, index) => (
                 <Col md={6} key={index}>
                   <Card className="shadow-sm orders-card m-2 p-3">
                     <Row>
                       <Col md={4}>
                         <img
-                          src={item.item_image}
+                          src={
+                            "https://yge.wvi.mybluehost.me/test/sanda-server/" +
+                            item.item_image
+                          }
                           alt=""
                           style={{ margin: "auto", width: 100, height: 100 }}
                         />

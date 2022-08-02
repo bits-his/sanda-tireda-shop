@@ -24,6 +24,8 @@ export const DELETE_CART = 'SHOP-DELETE_CART'
 export const DELETE_CARTS = 'SHOP-DELETE_CARTs'
 export const ORDER_ERROR = 'SHOP-ORDER_ERROR'
 export const ORDER_RESP = 'SHOP-ORDER_RESP'
+export const STOCK_LIST = 'SHOP-STOCK_LIST'
+
 
 
 

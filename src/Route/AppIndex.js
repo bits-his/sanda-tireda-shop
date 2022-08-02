@@ -1,9 +1,8 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { Col, Row } from "reactstrap";
-import AccountSidebar from "../Shop/Dashboard/AccountSidebar";
-import ShopItems from "../Shop/ShopItems";
 import ShopNavbar from "../Shop/ShopNavbar";
+
 export default function AppIndex() {
   return (
     <div>

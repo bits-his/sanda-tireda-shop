@@ -1,14 +1,13 @@
 
-import { _postApi } from "./api";
+import { _fetchApi, _postApi } from "./api";
 import {
   ADD_CART,
-  CART_ITEM,
-  CARTS_LIST,
   UPDATE_CART,
   DELETE_CART,
   ORDER_ERROR,
   ORDER_RESP,
-  DELETE_CARTS
+  DELETE_CARTS,
+  STOCK_LIST
 } from "./type";
 
 export function addCart(payload = {}) {
@@ -18,6 +17,7 @@ export function addCart(payload = {}) {
 }
 export function updateCart(payload = {}) {
   return (dispatch) => {
+    console.log(payload);
     dispatch({ type: UPDATE_CART, payload })
   }
 }
@@ -38,9 +38,25 @@ export function deleteCarts() {
 export const newOrder = (data={}) =>{
 
   return (dispatch) => {
-  _postApi('/orders/walk-in',data, (resp)=>{
+  _postApi('/orders/new-order',data, (resp)=>{
 
     dispatch({ type: ORDER_RESP, payload:resp.data })
+  },(error)=>{
+
+    dispatch({ type: ORDER_ERROR, payload:error})
+  })
+  } 
+}
+export const getStockList = (cb=(f)=>f) =>{
+
+  return (dispatch) => {
+    _fetchApi(
+      "/account/get/inventory2/d8d7a732-1832-4e25-9a98-e68ddc3f0b26?query_type=web",
+   (resp)=>{
+    if(resp.results.length){
+      cb(false)
+      dispatch({ type: STOCK_LIST, payload:resp.results })
+    }
   },(error)=>{
 
     dispatch({ type: ORDER_ERROR, payload:error})

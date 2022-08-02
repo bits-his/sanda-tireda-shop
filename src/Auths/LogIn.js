@@ -55,7 +55,9 @@ export default function Login({ setType, toggle }) {
 				<p style={{
 					marginLeft: 15
 				}} >New user ?</p>
-				<a href="#" className="href1" style={{ marginLeft: 15 }} onClick={(e)=>{e.preventDefault(); setType('Signup')}}>Sign Up Here</a>
+				{// eslint-disable-next-line
+						}
+				<a href="/#" style={{ marginLeft: 15 }} onClick={(e)=>{e.preventDefault(); setType('Signup')}}>Sign Up Here</a>
 			</div>
 		</div>	</Form>
 	)

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Badge,
@@ -11,67 +11,48 @@ import {
   Row,
   Spinner,
 } from "reactstrap";
-import { _fetchApi } from "../redux/action/api";
-import { addCart,updateCart } from "../redux/action/shop";
+import { addCart,getStockList,updateCart } from "../redux/action/shop";
 
-export default function ShopItems() {
+const ShopItems = () =>{
 
-  const {carts}  = useSelector((s)=>s.shop)
+  const {carts, stocks}  = useSelector((s)=>s.shop)
   const [loading, setLoading] = useState(true)
-  const [cart, setCart] = useState({})
-
   const dispatch = useDispatch()
 
-  const addToCart = useCallback((it) => {
-    console.log({...it, qty:1});
-    setCart({...it, qty:1})
+  const addToCart = (it) => {
     dispatch(addCart({...it, qty:1}));
-  });
+  }
 
-  const deleteCart = useCallback((it) => {
-    setCart({...it,  qty: cart.qty-1})
-    dispatch(updateCart({...it, qty: cart.qty-1}));
-  });
+  const deleteCart = (it) => {
+    dispatch(updateCart({item_code:it.item_code, qty: it.qty-1}));
+  }
 
-  const addCartItem = useCallback((it) => {
-    setCart({...it,  qty: cart.qty+1})
-    dispatch(updateCart({...it, qty: cart.qty+1}));
-  });
+  const addCartItem = (it) => {
+    dispatch(updateCart({item_code:it.item_code, qty: it.qty+1}));
+  }
 
-  const [itemList, setItemList] = useState([]);
+  const getList = useCallback(() => {
+    if(stocks.length<1){
+      dispatch(getStockList((setLoading)));
+    }
+  }, [stocks.length,dispatch]);
 
-  const getItemList = () => {
-    _fetchApi(
-      "/account/get/inventory2/d8d7a732-1832-4e25-9a98-e68ddc3f0b26?query_type=web",
-      (data) => {
-        if (data.results && data.results.length) {
-          setLoading(false)
-          setItemList(data.results);
-        }
-      },
-    (e) => {
-      console.log(e);
-    })
-  };
-
-  useEffect(() => {
-    getItemList();
-  }, []);
+  useEffect(()=>{
+    getList()
+  })
 
   return (
     <div style={{ paddingTop: 70, paddingBottom: 20 }}>
-
-    {/* {JSON.stringify({cart})} */}
       <Container>
         <Card className="mt-3 shop-main-card shadow">
           <p className="shop-card-title text-center">Select item to buy</p>
          {loading && <center ><Spinner /> Loading, Please wait...</center >}
           <Row>
-            {/* {JSON.stringify(itemList)} */}
-            {itemList.map((item, index) => {
+            {/* {JSON.stringify(carts)} */}
+            {stocks&&stocks.filter(itm=>itm.balance>0).map((item, index) => {
               let selected = carts.find((a) => a.item_code === item.item_code);
               return (
-                <Col key={index} md={2} className="mt-3">
+                <Col key={index} itmmd={2} className="mt-3">
                   <Card className="item-card mb-3">
                     <CardBody className="item-card-body">
                       <div className="text-center">
@@ -100,17 +81,14 @@ export default function ShopItems() {
                         <div className="q-div text-center">
                           <Button
                             className="plus"
-                            onClick={() => addCartItem(item)}
+                            onClick={() =>{ addCartItem(carts.filter(ct=>ct.item_code===item.item_code)[0])}}
                           >
                             +
                           </Button>
-                          <p className="item-quantity">
-                            {selected.selected_quantity}
-                          </p>
-                          <Badge>{carts.filter(ct=>ct.item_code===item.item_code)[0].qty}</Badge>
+                          <Badge>{selected.qty}</Badge>
                           <Button
                             className="minus"
-                            onClick={() => deleteCart(item)}
+                            onClick={() =>{ deleteCart(carts.filter(ct=>ct.item_code===item.item_code)[0])}}
                           >
                             -
                           </Button>
@@ -136,13 +114,4 @@ export default function ShopItems() {
     </div>
   );
 }
-
-// let v = {
-//   item_name: "BUA SUGAR",
-//   unit_price: "24000",
-//   item_code: "/BUA/",
-//   item_image: "images (25).jpeg",
-//   balance: 0,
-//   group_code: "FOO",
-//   item_category: "FOO",
-// };
+export default memo(ShopItems)

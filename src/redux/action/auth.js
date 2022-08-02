@@ -7,13 +7,13 @@ import {
   STOP_LOADING_APP,
   ERROR_MESSAGE,
 } from "./type";
-import { apiURL, _postApi } from "./api";
+import { apiURL, _fetchApi, _postApi } from "./api";
 // import { useHistory } from 'react-router-dom';
 
 export function signup(objs = {}, success = (f) => f, error = (f) => f) {
   return (dispatch) => {
     dispatch({ type: LOADING_SIGNUP });
-    fetch(`${apiURL}/api/auth/sign-up/dashboard`, {
+    fetch(`${apiURL}/api/auth/sign-up`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -59,7 +59,7 @@ export function signup(objs = {}, success = (f) => f, error = (f) => f) {
   };
 }
 
-export function login({ email, password }, success, error) {
+export function login({ email, password }, success=(f)=>f, error=(f)=>f) {
   return (dispatch) => {
     // dispatch({ type: LOADING_LOGIN });
     fetch(`${apiURL}/api/auth/login`, {
@@ -82,7 +82,9 @@ export function login({ email, password }, success, error) {
                  * Token is valid
                  * navigate user to dashboard */
                 const { user } = data;
-                dispatch({ type: SET_USER, payload: user });
+                getCustomerAcct({...user,token},(customer)=> {
+                  dispatch({ type: SET_USER, payload: {user,customer} })});
+                // dispatch({ type: SET_USER, payload: user });
                 // console.log('got here', user.id);
                 if (token) {
                   localStorage.setItem("@@bits_lis", JSON.stringify(token));
@@ -124,7 +126,7 @@ export function login({ email, password }, success, error) {
   }
 }
 
-export function init(callback = (f) => f) {
+export function init() {
   return (dispatch) => {
     let token = localStorage.getItem("@@bits_lis");
     // dispatch({ type: START_LOADING_APP });
@@ -139,18 +141,21 @@ export function init(callback = (f) => f) {
             /**
              * Token is valid
              * navigate user to dashboard */
-            callback();
-            dispatch({ type: STOP_LOADING_APP });
+            // callback();
+            // dispatch({ type: STOP_LOADING_APP });
             const { user } = data;
-            dispatch({ type: SET_USER, payload: user });
-
+            // dispatch({ type: SET_USER, payload: user})
+            getCustomerAcct({...user,token},(customer)=> {
+              dispatch({ type: SET_USER, payload: {user,customer} })});
+            // dispatch({ type: SET_USER, payload: user });
+            // console.log('got here', user.id);
             // history("/admin/");
           } else {
             /**
              * Token is invalid
              * navigate user to auth */
             // dispatch({ type: STOP_LOADING_APP });
-            callback();
+            // callback();
             // console.log(err)
             localStorage.removeItem("@@bits_lis");
             // history("/");
@@ -159,7 +164,7 @@ export function init(callback = (f) => f) {
         })
         .catch((err) => {
           // server error
-          // console.log(err);
+          console.log(err);
           dispatch({ type: STOP_LOADING_APP });
         });
     } else {
@@ -167,7 +172,7 @@ export function init(callback = (f) => f) {
        * No token found
        * navigate user to auth page
        */
-      callback();
+      // callback();
       // history("/");
       // dispatch({ type: STOP_LOADING_APP });
     }
@@ -204,4 +209,21 @@ export function getAuthToken({ user }) {
       console.error(error);
     }
   );
+}
+
+export function getCustomerAcct(user ,cb=f=>f, err=f=>f) {
+  fetch(`${apiURL}/user-get-customer?user_id=${user.id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",authorization: user.token
+    }
+  })
+    .then((raw) => raw.json())
+    .then((data) => {
+      cb(data.customer)
+    })
+    .catch((error) => {
+      console.error(error);
+      err()
+    });
 }

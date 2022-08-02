@@ -11,17 +11,17 @@ import { useState } from "react";
 import { _postApi } from "../redux/action/api";
 import { deleteCarts } from "../redux/action/shop";
 export default function ShopCart() {
-  const {shop:{carts}, auth:{authenticated,user} } = useSelector((s)=>s)
+  const {shop:{carts}, auth:{authenticated,customer} } = useSelector((s)=>s)
   const dispatch = useDispatch()
   const [auth_type, setAuthType] = useState('Login');
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
   const checkout = () =>{
-    const data = carts.map((dt)=>({...dt,requisition_type:'walk-in',branch_id:user.id}))
-    _postApi('/orders/walk-in', data,
+    const data = carts.map((dt)=>({...dt,requisition_type:'Walk-in',item_id:parseInt(dt.id),request_by:customer.accountNo}))
+    _postApi('/orders/new-order', data,
     (res)=>{
-      console.log(res)
+      console.log(data)
       dispatch(deleteCarts())
     },
     (err)=>console.error(err))

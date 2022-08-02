@@ -14,7 +14,7 @@ export default function SignUp({ setType, toggle }) {
 		password: '',
 		phone: '',
 		username: '',
-		branch_name: 'Online Store',
+		// branch_name: 'Online Store',
 		status:'approved',
 	})
 
@@ -25,7 +25,8 @@ export default function SignUp({ setType, toggle }) {
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		console.log(form);
-		dispatch(signup(form,()=>{toggle()}))
+		const data =  {...form, business_name:form.username, branch_name:form.username}
+		dispatch(signup(data,()=>{toggle()}))
 	}
 
 	return (
@@ -144,7 +145,9 @@ export default function SignUp({ setType, toggle }) {
 					</div>
 					<div style={{ display: "flex", flexDirection: "row", margin: 10 }}>
 						<p>Already have an Account ?</p>
-						<button type="button" onClick={() => setType('Login')} className="nessted" style={{ marginLeft: 15 }}>LogIn</button>
+						{// eslint-disable-next-line
+						}
+						<a href="/#" type="button" onClick={(e) => { e.preventDefault(); setType('Login')}} style={{ marginLeft: 15 }}>LogIn</a>
 					</div>
 				</div>
 			</div>

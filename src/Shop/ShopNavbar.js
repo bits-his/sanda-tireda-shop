@@ -48,6 +48,7 @@ export default function ShopNavbar() {
       <Row className="nav-row">
         <Col md={2} className="col1">
           <img
+            alt="logo"
             src={logo}
             style={{ width: 50, marginTop: 12, cursor: "pointer" }}
             onClick={() => navigate("/")}
@@ -83,11 +84,11 @@ export default function ShopNavbar() {
                     <DropdownItem className="drop-down-item" onClick={()=>navigate('/account')} >
                       Account
                     </DropdownItem>
-                    <DropdownItem className="drop-down-item">
+                    <DropdownItem onClick={()=>navigate('/account/orders')}  className="drop-down-item">
                       Orders
                     </DropdownItem>
                     <DropdownItem className="drop-down-item" divider />
-                    <DropdownItem onClick={(e)=>{e.preventDefault(); dispatch(logout())}} className="drop-down-item">
+                    <DropdownItem onClick={()=>{ dispatch(logout())}} className="drop-down-item">
                       Sign Out
                     </DropdownItem>
                   </DropdownMenu>
@@ -126,7 +127,7 @@ export default function ShopNavbar() {
               <li className="btn" onClick={() => navigate("/cart")}>
                 {/* <div className="cart-div"> */}
                 <ShoppingCart size="1.5em" /> Cart
-                <span className="cart-count">{carts.length && carts.reduce((p, c) => p + c.qty,0)}</span>
+                <span className="cart-count">{carts.length && carts.reduce((p, c) => p + parseInt(c.qty),0)}</span>
                 {/* </div> */}
               </li>
             </ul>
