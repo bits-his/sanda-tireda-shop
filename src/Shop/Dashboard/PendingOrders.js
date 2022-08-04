@@ -26,7 +26,7 @@ export default function PendingOrders({orders}) {
                         <Col md={4}>
                           <img
                           src={
-                            "https://yge.wvi.mybluehost.me/test/sanda-server/" +
+                            "https://yge.wvi.mybluehost.me/test/sanda-server/uploads/" +
                             item.item_image
                           }
                             alt=""

@@ -7,7 +7,7 @@ import {
   STOP_LOADING_APP,
   ERROR_MESSAGE,
 } from "./type";
-import { apiURL, _fetchApi, _postApi } from "./api";
+import { apiURL, _postApi } from "./api";
 // import { useHistory } from 'react-router-dom';
 
 export function signup(objs = {}, success = (f) => f, error = (f) => f) {
@@ -78,17 +78,17 @@ export function login({ email, password }, success=(f)=>f, error=(f)=>f) {
           getUserProfile(token)
             .then((data) => {
               if (data.success) {
-                /**
-                 * Token is valid
-                 * navigate user to dashboard */
+                // Token is valid
+                   if (token) {
+                    localStorage.removeItem("@@bits_lis");
+                    localStorage.setItem("@@bits_lis", JSON.stringify(token));
+                }
                 const { user } = data;
                 getCustomerAcct({...user,token},(customer)=> {
                   dispatch({ type: SET_USER, payload: {user,customer} })});
                 // dispatch({ type: SET_USER, payload: user });
                 // console.log('got here', user.id);
-                if (token) {
-                  localStorage.setItem("@@bits_lis", JSON.stringify(token));
-                }
+              
                 success(data);
                 // history("/admin/");
               }
@@ -146,7 +146,7 @@ export function init() {
             const { user } = data;
             // dispatch({ type: SET_USER, payload: user})
             getCustomerAcct({...user,token},(customer)=> {
-              dispatch({ type: SET_USER, payload: {user,customer} })});
+              dispatch({ type: SET_USER, payload: {...{...user,token},customer} })});
             // dispatch({ type: SET_USER, payload: user });
             // console.log('got here', user.id);
             // history("/admin/");

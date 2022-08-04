@@ -38,7 +38,7 @@ export default function CartCard() {
                   </Col>
                   <Col md={2}>
                     <img
-                      src={item.item_image}
+                      src={"https://yge.wvi.mybluehost.me/test/sanda-server/uploads/" +item.item_image}
                       alt=""
                       style={{ margin: "auto", width: 100, height: 100 }}
                     />

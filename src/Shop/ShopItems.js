@@ -58,7 +58,7 @@ const ShopItems = () =>{
                       <div className="text-center">
                         <img
                           src={
-                            "https://yge.wvi.mybluehost.me/test/sanda-server/" +
+                            "https://yge.wvi.mybluehost.me/test/sanda-server/uploads/" +
                             item.item_image
                           }
                           alt=""
