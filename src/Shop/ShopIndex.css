@@ -94,6 +94,13 @@ nav li {
     width: 70px;
 }
 
+.none{
+    background-color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 8px;
+}
+
 .col2 button:hover {
     background-color: rgb(212, 106, 40);
 }
@@ -182,27 +189,21 @@ nav li {
 }
 
 .q-div {
-    margin-top: 10px;
+    /* margin-top: 10px; */
 }
 
 .plus, .minus {
     background-color: var(--secondaryColor);
     border: none;
     border-radius: 5px;
-    padding: 5px;
+    /* padding-top: -50px; */
     color: white;
-    width: 25%;
+    /* margin-left: 8px;
+    margin-right: 8px; */
+    /* width: 25%; */
     font-weight: bold;
+    font-size: 2px;
 }
-
-.plus {
-    float: left;
-}
-
-.minus {
-    float: right;
-}
-
 .cart-left-card, .cart-right-card {
     border: none;
 }
@@ -210,6 +211,12 @@ nav li {
 .trash {
     float: right;
     padding: 10px;
+}
+
+.chart-minus{
+    background-color: var(--secondaryColor);
+    color: #fff;
+    padding: 0;
 }
 
 .trash:hover {

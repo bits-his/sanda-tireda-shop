@@ -3,8 +3,12 @@ import { Facebook, Mail } from "react-feather";
 import { useDispatch } from "react-redux";
 import { Button, Form, Input } from "reactstrap";
 import { signup } from "../redux/action/auth";
+import CustomButton from "./CustomButton";
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function SignUp({ setType, toggle }) {
+  const [loading, setLoading] = useState(false)
+
 	// const { auth:{authenticated} } = useSelector((s)=>s)
 	const dispatch = useDispatch()
 	const [form, setForm] = useState({
@@ -23,16 +27,26 @@ export default function SignUp({ setType, toggle }) {
 		setForm((s)=>({...s, [name]: type === 'checked' ? checked : value }))
 	}
 	const handleSubmit = (e) => {
+		setLoading(true)
 		e.preventDefault()
 		console.log(form);
 		const data =  {...form, business_name:form.username, branch_name:form.username}
-		dispatch(signup(data,()=>{toggle()}))
+		dispatch(signup(data,()=>{
+			setLoading(false)
+			toast.success("Login successfully")
+			toggle()
+		}, (er) =>{ 
+			setLoading(false)
+			console.log(er)
+			toast.error("Unable to login")
+		}))
 	}
 
 	return (
 		<Form onSubmit={handleSubmit}>
 			<div className="singIn2">
 				<div>
+			<Toaster />
 					<h1 className="SingUp-first-header" >Create New Account</h1>
 					{/* {JSON.stringify(form)} */}
 					<div className="input-div" >
@@ -133,10 +147,11 @@ export default function SignUp({ setType, toggle }) {
 						</label>
 					</div>
 					<div style={{ display: "flex", flexDirection: "column" }}>
-						<button
-							onClick={handleSubmit}
+						<CustomButton loading={loading} type="submit" onClick={handleSubmit} className="btn-for-signUp">Login</CustomButton>
+						{/* <button
+							
 							className="btn-for-signUp"
-						>Sign Up</button>
+						>Sign Up</button> */}
 						<br />
 						<p className="text-center">- OR -</p>
 						<br />

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Badge, Button, Card, Col, Row } from "reactstrap";
-import { Trash } from "react-feather";
+import { Minus, Plus, Trash } from "react-feather";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteCart, updateCart } from "../redux/action/shop";
 
@@ -50,7 +50,7 @@ export default function CartCard() {
                           {item.item_name.length > 55
                             ? `${item.item_name.substring(0, 55)}...`
                             : item.item_name}{" "}
-                          <Badge>{item.qty}</Badge>
+                          {/* <Badge>{item.qty}</Badge> */}
                         </p>
                       </Col>
                       <Col md={4}>
@@ -60,7 +60,7 @@ export default function CartCard() {
                     <Row className="mt-3">
                       <Col md={9}>
                         <p>
-                          Avaibale at store: <Badge>{item.balance}</Badge>
+                          Available at store: <Badge>{item.balance}</Badge>
                         </p>
                         <p
                           style={{
@@ -76,32 +76,40 @@ export default function CartCard() {
 
                       <Col md={3}>
                         <div className="" style={{ float: "right" }}>
-
                           <Button
-                            className=""
+                            className=" plus"
                             style={{
-                              border: "none",
-                              borderRadius: "50%",
-                              width: 25,
-                              fontWeight: "bold",
+                              // border: "none",
+                              // fontSize:15,
+                              padding:2,
+                              marginRight:10
+                              // // borderRadius: "50%",
+                              // // width: 25,
+                              // fontWeight: "bold",
                             }}
                             onClick={() =>{ deleteCartItem(carts.filter(ct=>ct.item_code===item.item_code)[0])}}
                         
                           >
-                            -
+                            <Minus/>
                           </Button>
-                          <Badge>{selected.qty}</Badge>
+                          <span style={{
+                            fontSize:18,
+                            fontWeight:600
+                          }}>{selected.qty}</span>
                           <Button
-                            className=""
+                            className="plus"
                             style={{
-                              border: "none",
-                              borderRadius: "50%",
-                              width: 25,
-                              fontWeight: "bold",
+                              // border: "none",
+                              // borderRadius: "50%",
+                              // width: 25,
+                              // fontWeight: "bold",
+                              padding:2,
+                              marginLeft:10
+                              // margin
                             }}
                             onClick={() =>{ addCartItem(carts.filter(ct=>ct.item_code===item.item_code)[0])}}
                           >
-                            +
+                            <Plus/>
                           </Button>
                         </div>
                       </Col>

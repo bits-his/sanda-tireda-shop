@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import { message } from "antd";
+import React, { useEffect, useState } from "react";
 import { Facebook, Mail } from "react-feather";
+import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch } from "react-redux";
 import { Button, Form, Input } from "reactstrap";
 import { login } from "../redux/action/auth";
+import CustomButton from "./CustomButton";
 import "./index.css";
 
 export default function Login({ setType, toggle }) {
+  const [loading, setLoading] = useState(false)
 
 	const dispatch = useDispatch()
 
@@ -17,9 +21,19 @@ export default function Login({ setType, toggle }) {
 		setForm((p)=>({...p, [name]: value }))
 	}
 	const handleSubmit = (e) => {
+		setLoading(true)
 		e.preventDefault()
-		dispatch(login(form,()=>toggle()))
+		dispatch(login(form,()=>{
+			setLoading(false)
+			toast.success("Login successfully")
+			toggle()
+		}, (er) =>{ 
+			setLoading(false)
+			console.log(er)
+			toast.error("Unable to login")
+		}))
 	}
+
 	return (
 			<Form onSubmit={handleSubmit}>
 		<div className="singIn">
@@ -29,6 +43,7 @@ export default function Login({ setType, toggle }) {
 					marginTop: 50,
 				}}
 			>Login</h1>
+			<Toaster />
 			<div className="input-div" >	
 				<Input onChange={handleChange} name='email' className="SingUp-first-input" type="Email" placeholder="Email" />
 			</div>
@@ -44,7 +59,7 @@ export default function Login({ setType, toggle }) {
 				</label>
 				<a href="" className="href" >forget password</a>
 			</div>
-			<Button type="submit" className="btn-for-signUp">Login</Button>
+			<CustomButton loading={loading} type="submit" className="btn-for-signUp">Login</CustomButton>
 		
 			<br/>
 			<p className="text-center">- OR -</p>
@@ -62,3 +77,4 @@ export default function Login({ setType, toggle }) {
 		</div>	</Form>
 	)
 }
+

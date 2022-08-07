@@ -1,4 +1,5 @@
 import React, { memo, useCallback, useEffect, useState } from "react";
+import { Minus, Plus } from "react-feather";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Badge,
@@ -12,6 +13,7 @@ import {
   Spinner,
 } from "reactstrap";
 import { addCart,getStockList,updateCart } from "../redux/action/shop";
+import toast, { Toaster } from 'react-hot-toast';
 
 const ShopItems = () =>{
 
@@ -24,11 +26,11 @@ const ShopItems = () =>{
   }
 
   const deleteCart = (it) => {
-    dispatch(updateCart({item_code:it.item_code, qty: it.qty-1}));
+    dispatch(updateCart({item_code:it.item_code, qty: it.qty +1}));
   }
 
   const addCartItem = (it) => {
-    dispatch(updateCart({item_code:it.item_code, qty: it.qty+1}));
+    dispatch(updateCart({item_code:it.item_code, qty: it.qty-1}));
   }
 
   const getList = useCallback(() => {
@@ -43,6 +45,7 @@ const ShopItems = () =>{
 
   return (
     <div style={{ paddingTop: 70, paddingBottom: 20 }}>
+            <Toaster />
       <Container>
         <Card className="mt-3 shop-main-card shadow">
           <p className="shop-card-title text-center">Select item to buy</p>
@@ -80,17 +83,27 @@ const ShopItems = () =>{
                       {selected ? (
                         <div className="q-div text-center">
                           <Button
+                            style={{
+                              marginRight:10,
+                              padding:3,
+                              borderRadius:4                              
+                            }}
                             className="plus"
-                            onClick={() =>{ addCartItem(carts.filter(ct=>ct.item_code===item.item_code)[0])}}
-                          >
-                            +
-                          </Button>
-                          <Badge>{selected.qty}</Badge>
-                          <Button
-                            className="minus"
                             onClick={() =>{ deleteCart(carts.filter(ct=>ct.item_code===item.item_code)[0])}}
                           >
-                            -
+                            <Plus/>
+                          </Button>
+                          <span className="none">{selected.qty}</span>
+                          <Button
+                            style={{
+                              marginLeft:10,
+                              padding:3,
+                              borderRadius:4                              
+                            }}
+                            className="minus"
+                            onClick={() =>{ addCartItem(carts.filter(ct=>ct.item_code===item.item_code)[0])}}
+                          >
+                            <Minus/>
                           </Button>
                         </div>
                       ) : (
